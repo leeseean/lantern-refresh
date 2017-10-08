@@ -1,6 +1,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <fstream>
+#include <iostream>
 #include <string>
 #include <vector>
 using namespace std;
@@ -49,8 +50,17 @@ int main(int argc, char *argv[]) {
         ofs.close();
 
         execv("Lantern.exe", argv);
+
+        cout << "Refresh Complete" << endl;
     } else {
         ifs.close();
+        cout << "Please Manual open Lantern.exe" << endl;
+    }
+    clock_t t;
+    while(true) {
+        t = clock();
+        if (t >= 2000)
+            break;
     }
     return 0;
 }
