@@ -23,21 +23,21 @@ string random_id() {
 int main(int argc, char *argv[]) {
     string file_path = getenv("appdata");
     file_path.append("\\Lantern\\lantern-9.9.9.yaml");
-    
+
     ifstream ifs;
     ifs.open(file_path);
     if (ifs) {
         vector<string> v;
         vector<string>::iterator itv;
         string s;
-        while(!ifs.eof()) {
+        while (!ifs.eof()) {
             getline(ifs, s);
             v.push_back(s);
         }
 
         const string id = "deviceid: ";
-        for(itv = v.begin(); itv < v.end(); ++itv) {
-            if((*itv).find(id) != string::npos) {
+        for (itv = v.begin(); itv < v.end(); ++itv) {
+            if ((*itv).find(id) != string::npos) {
                 int index = (*itv).find(id) + id.size();
                 (*itv) = (*itv).substr(0, index) + random_id();
                 break;
@@ -45,22 +45,14 @@ int main(int argc, char *argv[]) {
         }
 
         ofstream ofs(file_path);
-        for(itv = v.begin(); itv < v.end(); ++itv)
+        for (itv = v.begin(); itv < v.end(); ++itv)
             ofs << *itv << endl;
         ofs.close();
 
         execv("Lantern.exe", argv);
-
-        cout << "Refresh Complete" << endl;
     } else {
         ifs.close();
-        cout << "Please Manual open Lantern.exe" << endl;
     }
-    clock_t t;
-    while(true) {
-        t = clock();
-        if (t >= 2000)
-            break;
-    }
+
     return 0;
 }
